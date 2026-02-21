@@ -1,7 +1,8 @@
 package main
 
-import(
-	"log"
+import (
+	//"log"
+	"log/slog"
 	"os"
 )
 
@@ -15,10 +16,11 @@ func main() {
 		config: cfg,
 	}
 
-	
+	logger:= slog.New(slog.NewTextHandler(os.Stdout,nil))
+	slog.SetDefault(logger)
 
 	if err:= api.run(api.mount());err!=nil{
-		log.Printf("server failed on mounting. err : %s",err)
+		slog.Error("server failed on mounting. err : %s","error",err)
 		os.Exit(1)
 	}
 
